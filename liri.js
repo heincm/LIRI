@@ -33,6 +33,9 @@ function getSong() {
 
 function getMovie() {
     let movie = process.argv.splice(3).join("+");
+    if (movie === ""){
+        movie = "Mr.+Nobody"
+    }
     axios.get("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy")
         .then(function (response) {
             let info = response.data;
