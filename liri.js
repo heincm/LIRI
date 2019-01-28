@@ -41,13 +41,3 @@ switch (process.argv[2]) {
         break;
     default: log("you messed up");
 }
-
-/*function concert-this(){
-
-};
-spotify-this-song
-movie-this
-do-what-it-says
-
-let process.argv[2] = action;
-*/
