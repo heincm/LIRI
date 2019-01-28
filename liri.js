@@ -6,8 +6,9 @@ let spot = require("./keys.js").spotify;
 let axios = require("axios");
 let moment = require("moment");
 let useSpotify = require("node-spotify-api");
+let fs = require("fs");
 
-// defiing concert function
+// delcaring each function
 function concert() {
     let artist = process.argv.splice(3).join("");
     axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
@@ -33,7 +34,7 @@ function getSong() {
 
 function getMovie() {
     let movie = process.argv.splice(3).join("+");
-    if (movie === ""){
+    if (movie === "") {
         movie = "Mr.+Nobody"
     }
     axios.get("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy")
@@ -54,6 +55,15 @@ function getMovie() {
         })
 };
 
+function doIt() {
+    fs.readFile('random.txt', 'utf8', function (error, data) {
+        if (error) {
+            return log(error);
+        }
+        log("node liri.js", data.split(",").join(" "));
+    });
+};
+
 // switch statement to handle various function options
 switch (process.argv[2]) {
     case "concert-this":
@@ -66,8 +76,7 @@ switch (process.argv[2]) {
         getMovie();
         break;
     case "do-what-it-says":
-        //doIt();
-        log("do it")
+        doIt();
         break;
     default: log("you done messed up, A-A-Ron!");
 }
