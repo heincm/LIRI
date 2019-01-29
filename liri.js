@@ -2,10 +2,11 @@ require("dotenv").config();
 
 let log = console.log;
 // requiring needed packages
-let spot = require("./keys.js").spotify;
+let Spotify = require("node-spotify-api");
+let keys = require("./keys.js"); debugger;
+let spotify = new Spotify(keys.spotify)
 let axios = require("axios");
 let moment = require("moment");
-let useSpotify = require("node-spotify-api");
 let fs = require("fs");
 let command = process.argv[2]
 let param = process.argv.splice(3)
@@ -24,10 +25,12 @@ function concert(band) {
         })
 };
 
-function getSong() {
-    useSpotify.request('https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx')
+function getSong(song) {debugger;
+    spotify.search({ type: 'track', query: song.join(" ") })
         .then(function (response) {
-            log(response);
+            log(response)
+            log(response.tracks.items[0].album.artists);
+            log(response.tracks.items[0].album.artists[0].name)
         })
         .catch(function (err) {
             log(err);
@@ -41,7 +44,7 @@ function getMovie(movie) {
         title = "Mr.+Nobody"
     }
     axios.get("http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy")
-        .then(function (response) {
+        .then(function (response) { debugger;
             let info = response.data;
             log("Title:", info.Title, '\n' +
                 "Year:", info.Year, '\n' +
@@ -82,7 +85,7 @@ switch (command) {
         concert(param);
         break;
     case "spotify-this-song":
-        getSong();
+        getSong(param);
         break;
     case "movie-this":
         getMovie(param);
