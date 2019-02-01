@@ -25,12 +25,17 @@ function concert(band) {
         })
 };
 
-function getSong(song) {debugger;
-    spotify.search({ type: 'track', query: song.join(" ") })
+function getSong(song) {
+    debugger;
+    spotify.request("https://api.spotify.com/v1/search?query=" + song + "&type=track&offset=0&market=US&limit=10")
         .then(function (response) {
+            //log(JSON.stringify(response, null, 2));
             log(response)
-            log(response.tracks.items[0].album.artists);
-            log(response.tracks.items[0].album.artists[0].name)
+            
+            //for (let i = 0; i < response.tracks; i++) {
+                //log(response.tracks.href.items);
+                //log(response.tracks.items[0].album.artists[0].name)
+            //}
         })
         .catch(function (err) {
             log(err);
@@ -44,7 +49,8 @@ function getMovie(movie) {
         title = "Mr.+Nobody"
     }
     axios.get("http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy")
-        .then(function (response) { debugger;
+        .then(function (response) {
+            debugger;
             let info = response.data;
             log("Title:", info.Title, '\n' +
                 "Year:", info.Year, '\n' +
