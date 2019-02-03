@@ -4,17 +4,16 @@ let log = console.log;
 
 // requiring needed packages
 let Spotify = require("node-spotify-api");
-let keys = require("./keys.js");
-let spotify = new Spotify(keys.spotify)
-let axios = require("axios");
-let moment = require("moment");
+const keys = require("./keys.js");
+let spotify = new Spotify(keys.spotify);
+const axios = require("axios");
+const moment = require("moment");
 let fs = require("fs");
-let command = process.argv[2]
-let param = process.argv.splice(3)
+let command = process.argv[2];
+let param = process.argv.splice(3);
 
-// delcaring each function
+// creating each function
 function concert(band) {
-  debugger;
   axios.get("https://rest.bandsintown.com/artists/" + band.join("") + "/events?app_id=codingbootcamp")
     .then(function (response) {
       let info = response.data[0]
@@ -38,15 +37,14 @@ function concert(band) {
 };
 
 function getSong(song) {
-  debugger;
-  let songName = song.join(" ")
+  let songName = song.join(" ");
   if (songName === "") {
     songName = "The Sign"
-  }
+  };
   spotify.request("https://api.spotify.com/v1/search?query=" + songName + "&type=track&offset=0&market=US&limit=10")
     .then(function (response) {
-      log("===========")
-      let data = response.tracks.items[0]
+      log("===========");
+      let data = response.tracks.items[0];
       let logInfo =
         `
       ==========
@@ -55,8 +53,8 @@ function getSong(song) {
       Album: ${data.album.name}
       Preview Url ${data.preview_url}
       ==========
-        `
-      log(logInfo)
+        `;
+      log(logInfo);
 
       fs.appendFile("log.txt", logInfo, "utf8", (error) => {
         if (error) throw error;
@@ -69,14 +67,12 @@ function getSong(song) {
 };
 
 function getMovie(movie) {
-  debugger;
   let title = movie.join("+");
   if (title === "") {
     title = "Mr.+Nobody"
-  }
+  };
   axios.get("http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy")
     .then(function (response) {
-      log("======")
       let info = response.data;
       let logInfo =
         `
@@ -107,9 +103,9 @@ function doIt() {
   fs.readFile('random.txt', 'utf8', function (error, data) {
     if (error) {
       return log(error);
-    }
-    let ignoreComma = data.split(",")
-    let textCommand = ignoreComma[1].replace(/^"|"$/g, '').split(" ")
+    };
+    let ignoreComma = data.split(",");
+    let textCommand = ignoreComma[1].replace(/^"|"$/g, '').split(" ");
     switch (ignoreComma[0]) {
       case "movie-this":
         getMovie(textCommand);
@@ -140,4 +136,4 @@ switch (command) {
     doIt();
     break;
   default: log("you done messed up, A-A-Ron! Check your command");
-}
+};
