@@ -29,7 +29,7 @@ function concert(band) {
       log(logInfo);
       fs.appendFile("log.txt", logInfo, "utf8", (error) => {
         if (error) throw error;
-        console.log('The "data to append" was appended to file!');
+        log('The "data to append" was appended to file!');
       });
     })
     .catch(function (error) {
@@ -60,7 +60,7 @@ function getSong(song) {
 
       fs.appendFile("log.txt", logInfo, "utf8", (error) => {
         if (error) throw error;
-        console.log('The "data to append" was appended to file!');
+        log('The "data to append" was appended to file!');
       });
     })
     .catch(function (err) {
@@ -91,12 +91,11 @@ function getMovie(movie) {
       Actors: ${info.Actors}
       ==========
         `
-
       log(logInfo);
 
       fs.appendFile("log.txt", logInfo, "utf8", (error) => {
         if (error) throw error;
-        console.log('The "data to append" was appended to file!');
+        log('The "data to append" was appended to file!');
       });
     })
     .catch(function (error) {
